@@ -22,6 +22,7 @@ let isMuted = false;
 if(audioIntro) audioIntro.volume = 0.5;
 if(audioChase) audioChase.volume = 0.4;
 
+
 if (muteBtn) {
     muteBtn.addEventListener('click', (e) => {
         
@@ -1008,13 +1009,33 @@ function gameOver() {
     }
 }
 
+// js/game.js dosyasının en sonundaki resize kısmını bununla değiştir:
+
+// js/game.js içindeki resize fonksiyonu
 function resize() {
     if (!canvas) return;
+
+    // Canvas'ı ekranın fiziksel boyutuna eşitle
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    // Eğer oyun içi çizimler (scoreboard vb.) çok kenardaysa 
+    // veya kesiliyorsa createGradients'ı yenile
     createGradients();
+
+    // CSS tarafındaki wall-scale-container'ın yüksekliğini 
+    // dinamik olarak ekran yüksekliğine sabitleyelim
+    const wallContainer = document.querySelector('.wall-scale-container');
+    if (wallContainer) {
+        wallContainer.style.height = window.innerHeight + 'px';
+    }
 }
+
+// Pencere boyutu değiştikçe oyunu yeniden ayarla
 window.addEventListener('resize', resize);
+
+// İlk yüklemede çalıştır
+resize();
 
 window.addEventListener('keydown', (e) => {
     if (isGameOver && e.code === 'Space') { location.reload(); return; }

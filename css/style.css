@@ -15,12 +15,23 @@ body {
 .font-title { font-family: 'Creepster', cursive; }
 .font-intro { font-family: 'Merriweather', serif; }
 
-/* --- DUVAR ÖLÇEKLENDİRME --- */
 .wall-scale-container {
-    transform: scale(0.90);
-    transform-origin: center center;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    height: 100vh; width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* İçeriği dikeyde ortalar */
+    width: 100vw;
+    height: 100vh;
+    padding: 4vh 0;/* Sabit px yerine ekran oranlı boşluk */
+    box-sizing: border-box;
+    overflow: hidden;
+    
+}
+
+/* Mesaj panelinin altındaki boşlukları daraltalım */
+#wall-content .max-w-2xl {
+    margin-top: 10px !important;
+    padding: 15px !important;
 }
 
 /* --- ARKA PLAN EFEKTLERİ --- */
@@ -130,10 +141,22 @@ body {
     padding: 40px; z-index: 200; text-align: center;
     display: flex; flex-direction: column; gap: 15px; width: 90%; max-width: 500px;
 }
+
 canvas { 
-    display: block; width: 100%; height: 100%; 
-    transform: scale(1.25); 
-    transform-origin: center center;
+    display: block; 
+    width: 100vw; 
+    height: 100vh; 
+    object-fit: contain; /* Görüntü oranını korur, taşmayı engeller */
+    background-color: #000;
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 /* Mute Butonu İçin Sabitler (Tailwind çalışmazsa diye yedek) */
@@ -142,3 +165,61 @@ canvas {
     font-size: 30px; background: none; border: none; cursor: pointer;
     color: #dc2626; text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
+
+/* Harf kutularının yüksekliğini ekranın %20'sine sabitleyin */
+.letter-container {
+    height: 18vh !important; 
+    max-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Ampulleri küçültün */
+.bulb {
+    width: 6vh !important;
+    height: 9vh !important;
+    max-width: 50px;
+    max-height: 75px;
+}
+
+/* Harf yazılarını küçültün */
+.letter-container div:last-child {
+    font-size: 5vh !important;
+    margin-top: 1vh !important;
+}
+
+
+#wall-content .max-w-2xl {
+    margin-top: 1vh !important;
+    padding: 1.5vh !important;
+    width: 90vw; /* Mobil ve dar ekranlar için */
+    max-width: 600px;
+}
+
+/* Buton yüksekliklerini azaltın */
+.game-btn, #go-to-game-btn {
+    padding: 1.5vh 2vw !important;
+    font-size: 1.8vh !important;
+}
+
+/* Input alanını daraltın */
+#message-input {
+    padding: 1vh !important;
+    font-size: 2vh !important;
+}
+/* Üst başlık alanı */
+.wall-scale-container .text-center.mb-2 {
+    margin-bottom: 2vh !important;
+}
+
+.wall-scale-container h1.text-5xl {
+    font-size: 4.5vh !important; /* Başlığı küçülttük */
+    letter-spacing: 0.5rem;
+}
+
+.wall-scale-container p.text-red-900 {
+    font-size: 1.2vh !important;
+    margin-top: 0.5vh !important;
+}
+
