@@ -1011,7 +1011,6 @@ function gameOver() {
 
 // js/game.js dosyasının en sonundaki resize kısmını bununla değiştir:
 
-// js/game.js içindeki resize fonksiyonu
 function resize() {
     if (!canvas) return;
 
