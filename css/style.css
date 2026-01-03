@@ -1,0 +1,144 @@
+/* --- FONTLAR --- */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Merriweather:wght@700&family=Press+Start+2P&family=Benguiat+ITC&display=swap');
+
+/* --- TEMEL AYARLAR --- */
+body {
+    background-color: #000;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    overflow: hidden;
+    margin: 0;
+    user-select: none;
+}
+
+.font-wall { font-family: 'Permanent Marker', cursive; }
+.font-title { font-family: 'Creepster', cursive; }
+.font-intro { font-family: 'Merriweather', serif; }
+
+/* --- DUVAR ÖLÇEKLENDİRME --- */
+.wall-scale-container {
+    transform: scale(0.90);
+    transform-origin: center center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100vh; width: 100vw;
+}
+
+/* --- ARKA PLAN EFEKTLERİ --- */
+.wall-pattern {
+    position: absolute; inset: 0;
+    background-color: #dcbfa6;
+    background-image: radial-gradient(#a3866a 15%, transparent 16%), radial-gradient(#a3866a 15%, transparent 16%);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+    opacity: 0.8; z-index: 0;
+}
+
+.vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.95) 100%);
+    z-index: 10; pointer-events: none;
+}
+
+.grain {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url('../assets/images/noise.png'); /* Yolu kontrol et */
+    background-repeat: repeat;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 200;
+    transform: translateZ(0); 
+    will-change: transform; 
+    animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform:translate(0, 0) }
+  10% { transform:translate(-5%, -10%) }
+  20% { transform:translate(-15%, 5%) }
+  30% { transform:translate(7%, -25%) }
+  40% { transform:translate(-5%, 25%) }
+  50% { transform:translate(-15%, 10%) }
+  60% { transform:translate(15%, 0%) }
+  70% { transform:translate(0%, 15%) }
+  80% { transform:translate(3%, 35%) }
+  90% { transform:translate(-10%, 10%) }
+}
+
+/* Işıklar */
+.bulb { transition: all 0.1s ease-in-out; }
+.bulb-base { filter: brightness(0.6); opacity: 0.4; box-shadow: inset -2px -2px 6px rgba(0,0,0,0.3); }
+.bulb-lit { filter: brightness(1.5); opacity: 1 !important; transform: scale(1.2); box-shadow: 0 0 15px currentColor; }
+
+.wire {
+    position: absolute; height: 50px; width: 100%;
+    border-top: 3px solid #222; border-radius: 50%;
+    top: -20px; left: 50%; transform: translateX(-50%);
+    z-index: 0; pointer-events: none;
+}
+
+/* --- INTRO ANİMASYONLARI --- */
+.intro-text {
+    font-family: 'Benguiat ITC', serif;
+    color: transparent; -webkit-text-stroke: 2px #ff1111;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    letter-spacing: -5px; transform: scale(30); opacity: 0;
+    animation: zoomInText 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.intro-text-fill {
+    background: linear-gradient(to bottom, #800, #f00);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; opacity: 0;
+    animation: fillText 2s ease-in forwards 2s;
+}
+
+.intro-lines {
+    animation: expandLine 3s ease-out forwards 0.5s; transform: scaleX(0);
+}
+
+@keyframes zoomInText {
+    0% { transform: scale(20); opacity: 0; letter-spacing: 50px; }
+    40% { opacity: 1; }
+    100% { transform: scale(1); opacity: 1; letter-spacing: 2px; }
+}
+@keyframes fillText { from { opacity: 0; } to { opacity: 1; } }
+@keyframes expandLine { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+@keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.animate-flicker { animation: flicker 0.1s infinite; }
+
+/* --- OYUN BUTONLARI --- */
+.game-btn {
+    padding: 15px 30px; font-size: 16px; background: #c0392b; color: white;
+    border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;
+    font-family: 'Press Start 2P', cursive; transition: 0.2s;
+}
+.game-btn:hover { background: #e74c3c; transform: scale(1.05); }
+.game-btn-outline { background: transparent; border: 2px solid #c0392b; color: #c0392b; }
+.game-btn-outline:hover { background: #c0392b; color: white; }
+
+#score-board {
+    position: absolute; top: 20px; left: 20px;
+    font-size: 20px; text-shadow: 2px 2px 0 #000; z-index: 10;
+}
+#game-over-screen {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.95); border: 4px solid #e71d23;
+    padding: 40px; z-index: 200; text-align: center;
+    display: flex; flex-direction: column; gap: 15px; width: 90%; max-width: 500px;
+}
+canvas { 
+    display: block; width: 100%; height: 100%; 
+    transform: scale(1.25); 
+    transform-origin: center center;
+}
+
+/* Mute Butonu İçin Sabitler (Tailwind çalışmazsa diye yedek) */
+#mute-btn {
+    position: fixed; top: 20px; right: 20px; z-index: 200;
+    font-size: 30px; background: none; border: none; cursor: pointer;
+    color: #dc2626; text-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
