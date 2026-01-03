@@ -254,4 +254,11 @@ canvas {
         font-size: 12px !important;
         padding: 8px !important;
     }
+
+    /* Canvas'ın mobilde ekranı tam doldurmasını sağla */
+    canvas {
+        object-fit: fill !important; /* Veya 'cover' da deneyebilirsin */
+        width: 100vw !important;
+        height: 100vh !important;
+    }
 }
