@@ -56,4 +56,4 @@ Created with ❤️ for the Stranger Things community.
 
 
 Would you like me to help you set up **GitHub Pages** so your friends can play the game via
-<img width="577" height="1268" alt="image" src="https://github.com/user-attachments/assets/b97854e7-2ecb-4f27-a596-9f0621799d48" />
+
