@@ -10,7 +10,7 @@ Stranger Gravity is a high-octane, endless runner web game inspired by the **Str
 
 In this world, the floor is just a suggestion. Players must switch between top and bottom platforms to avoid deadly obstacles and collect items.
 
-- **Gravity Flip:** A single click or spacebar press flips your character’s gravity instantly.
+- **Gravity Flip (Character-Specific):** Gravity is controlled by pressing the **initial letter** of your selected character. For example, if you are playing as **E**leven, press **'E'** to flip gravity. If you are **M**ike, press **'M'**.
 - **Dynamic Dimensions:** Encounter portals that transport you to the **Upside Down**, where visuals change and danger increases.
 - **Procedural Level Generation:** Every run is unique! The game dynamically generates:
     - **Floating Islands:** High-altitude platforms requiring precise timing.
