@@ -11,7 +11,7 @@ const playBtn = document.getElementById('play-btn');
 const stopBtn = document.getElementById('stop-btn');
 const clearBtn = document.getElementById('clear-btn');
 const demoBtn = document.getElementById('demo-btn');
-
+const isMobileDevice = window.innerWidth < 768;
 
 const audioIntro = document.getElementById('music-intro');
 const audioChase = document.getElementById('music-chase');
@@ -371,16 +371,52 @@ class Particle {
 
 class Platform {
     constructor(x, y, w, h, isCeiling, isFiller = false) {
-        this.x = x; this.y = y; this.w = w; this.h = h; this.isCeiling = isCeiling; this.isFiller = isFiller; this.markedForDeletion = false;
+        this.x = x; 
+        this.y = y; 
+        this.w = w; 
+        this.h = h; 
+        this.isCeiling = isCeiling; 
+        this.isFiller = isFiller; 
+        this.markedForDeletion = false;
     }
-    update() { this.x -= gameSpeed; if (this.x + this.w < -200) this.markedForDeletion = true; }
+
+    update() { 
+        this.x -= gameSpeed; 
+        if (this.x + this.w < -200) this.markedForDeletion = true; 
+    }
+
     draw() {
-        let mainColor = isUpsideDown ? "#3a0000" : "#1a2530"; let glowColor = isUpsideDown ? "#ff0000" : "#00ffff";
+        let mainColor = isUpsideDown ? "#3a0000" : "#1a2530"; 
+        let glowColor = isUpsideDown ? "#ff0000" : "#00ffff";
         let drawW = this.w + 2; 
-        ctx.fillStyle = mainColor; ctx.fillRect(this.x, this.y, drawW, this.h);
+
+        // 1. Ana platform gövdesini çiz (Gölgesiz)
+        ctx.fillStyle = mainColor; 
+        ctx.fillRect(this.x, this.y, drawW, this.h);
+
+        // 2. Neon şeridi çiz
         if (!this.isFiller) { 
             ctx.fillStyle = glowColor; 
-            this.isCeiling ? ctx.fillRect(this.x, this.y + this.h - 4, drawW, 4) : ctx.fillRect(this.x, this.y, drawW, 4); 
+
+            
+            const isMobile = window.innerWidth < 768;
+
+            if (!isMobile) {
+                ctx.shadowBlur = 10; 
+                ctx.shadowColor = glowColor;
+            } else {
+                ctx.shadowBlur = 0; // Mobilde gölge yok, saf renk
+            }
+
+            // Şeridi çiz
+            if (this.isCeiling) {
+                ctx.fillRect(this.x, this.y + this.h - 4, drawW, 4);
+            } else {
+                ctx.fillRect(this.x, this.y, drawW, 4); 
+            }
+
+            
+            ctx.shadowBlur = 0; 
         }
     }
 }
@@ -644,35 +680,60 @@ function restartGame() {
 }
 
 function resetGame() {
-    obstacles = []; platforms = []; eggos = []; players = []; particles = [];
-    score = 0; waffleCount = 0;
+    // Dizileri ve değişkenleri sıfırla
+    obstacles = []; 
+    platforms = []; 
+    eggos = []; 
+    players = []; 
+    particles = [];
+    score = 0; 
+    waffleCount = 0;
     gameSpeed = 3.0;
-    isUpsideDown = false; isGameOver = false; lastPortalFrame = 0;
+    isUpsideDown = false; 
+    isGameOver = false; 
+    lastPortalFrame = 0;
     
-    
+    // Canavarın başlangıç konumu
     demogorgonX = 250; 
     demogorgonY = canvas.height / 2;
     monsterTimer = 0;
     
-    bgLayers = [new BackgroundLayer(0.2, "#050505"), new BackgroundLayer(0.5, "#101010")];
-    for (let i = 0; i < 150; i++) particles.push(new Particle());
+    // Arka plan katmanları
+    bgLayers = [
+        new BackgroundLayer(0.2, "#050505"), 
+        new BackgroundLayer(0.5, "#101010")
+    ];
 
+    // --- PERFORMANS AYARI (KASMAYI ÖNLEMEK İÇİN) ---
+    // Eğer ekran genişliği 768px'den küçükse (mobil), sadece 20 parçacık oluştur.
+    // Bilgisayardaysa 150 tane oluştur. Bu telefonun işlemcisini rahatlatır.
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 20 : 150;
+
+    for (let i = 0; i < particleCount; i++) { 
+        particles.push(new Particle()); 
+    }
+
+    // Platform ve Tünel ayarları
     currentPlatformY = canvas.height / 2; 
     currentTunnelHeight = 320;
     let halfT = currentTunnelHeight / 2;
+    
+    // İlk platformları oluştur
     platforms.push(new Platform(0, currentPlatformY + halfT, canvas.width, 40, false));
     platforms.push(new Platform(0, currentPlatformY - halfT - 40, canvas.width, 40, true));
+    
     nextSpawnX = canvas.width;
 
+    // Seçilen karakterleri sahneye ekle
     selectedPlayers.forEach((charData, index) => {
-       
         let startX = 500 + (index * 60);
         let startY = (currentPlatformY + halfT) - 70 - 1;
         players.push(new Player(charData, startX, startY));
     });
+
     document.getElementById('game-over-screen').style.display = 'none';
 }
-
 
 function generateLevel() {
     if (nextSpawnX < canvas.width + 500) {
@@ -1020,7 +1081,7 @@ function resize() {
     // Mobildeysen ekranı sanal olarak 2 katı genişlikte çizdiriyoruz.
     // Bu sayede ekrana daha fazla oyun alanı sığıyor (karakter küçülüyor).
     // Eğer hala çok yakın gelirse 2.0 sayısını 2.5 yapabilirsin.
-    const zoomOutFactor = isMobile ? 2.0 : 1.0; 
+    const zoomOutFactor = isMobile ? 2.4 : 1.0; 
 
     // Canvas'ın iç çözünürlüğünü artırıyoruz
     canvas.width = window.innerWidth * zoomOutFactor;
