@@ -1015,19 +1015,46 @@ function gameOver() {
 function resize() {
     if (!canvas) return;
 
-    // Canvas'ı ekranın fiziksel boyutuna eşitle
+    // 1. Canvas'ın fiziksel boyutunu tarayıcı penceresine eşitle
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Eğer oyun içi çizimler (scoreboard vb.) çok kenardaysa 
-    // veya kesiliyorsa createGradients'ı yenile
-    createGradients();
+    // 2. Mobil cihaz kontrolü (768px altı telefon/tablet kabul edilir)
+    const isMobile = window.innerWidth < 768;
 
-    // CSS tarafındaki wall-scale-container'ın yüksekliğini 
-    // dinamik olarak ekran yüksekliğine sabitleyelim
+    // 3. Oyun içi çizimleri (gradyanlar, arka planlar) yeni boyuta göre güncelle
+    if (typeof createGradients === "function") {
+        createGradients();
+    }
+
+    // 4. Giriş ekranı ve Mesaj Duvarı (HTML) için dinamik düzenlemeler
     const wallContainer = document.querySelector('.wall-scale-container');
     if (wallContainer) {
+        // Tarayıcı adres çubuğu değişimlerinden etkilenmemesi için yüksekliği sabitle
         wallContainer.style.height = window.innerHeight + 'px';
+        
+        // Ekran genişliğine göre ölçeklendirmeyi (zoom efekti) ayarla
+        if (isMobile) {
+            // Mobilde içerik daralmasın diye ölçeği biraz artırıyoruz
+            wallContainer.style.transform = 'scale(0.85)'; 
+        } else {
+            // Masaüstünde senin istediğin o ferah %75 görünümü
+            wallContainer.style.transform = 'scale(0.75)'; 
+        }
+        
+        // Ölçekleme yaparken içeriğin kaymaması için merkezi sabitle
+        wallContainer.style.transformOrigin = 'center center';
+    }
+
+    // 5. Oyun menü ekranı (Character Selection) için mobil sığdırma
+    const menuScreen = document.getElementById('menu-screen');
+    if (menuScreen && isMobile) {
+        const menuContent = menuScreen.querySelector('.relative');
+        if (menuContent) {
+            menuContent.style.width = '95vw';
+            menuContent.style.maxHeight = '90vh';
+            menuContent.style.overflowY = 'auto'; // Çok küçük ekranlarda kaydırma sağla
+        }
     }
 }
 

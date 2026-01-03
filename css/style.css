@@ -223,3 +223,57 @@ canvas {
     margin-top: 0.5vh !important;
 }
 
+/* Mobil Cihazlar İçin Özel Ayarlar (Ekran genişliği 768px'den küçükse) */
+@media (max-width: 768px) {
+    /* 1. Giriş/Duvar Ekranı */
+    .wall-scale-container {
+        transform: scale(0.95); /* Mobilde küçültmek yerine ekrana yayalım */
+        padding: 2vh 2vw;
+    }
+
+    .letter-container {
+        width: 12vw !important; /* Harf kutularını ekran genişliğine göre ayarla */
+        margin: 1px !important;
+    }
+
+    .bulb {
+        width: 8vw !important;
+        height: 12vw !important;
+    }
+
+    .font-wall {
+        font-size: 6vw !important; /* Harf karakterlerini küçült */
+    }
+
+    /* 2. Karakter Seçme Menüsü */
+    #char-selection-grid {
+        grid-template-columns: repeat(3, 1fr) !important; /* 3'lü yan yana diz */
+        gap: 8px !important;
+    }
+
+    .char-box { /* Karakter kutularının genel sınıfı */
+        width: 25vw !important;
+        height: 35vw !important;
+        padding: 5px !important;
+    }
+
+    #menu-screen .relative {
+        width: 95vw !important;
+        padding: 15px !important;
+    }
+}
+
+/* Harflerin mobilde yan yana düzgün durması için */
+#row-1, #row-2, #row-3 {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    justify-content: center !important;
+}
+
+/* Mobilde harf kutularını biraz daha küçültelim ki yan yana sığsınlar */
+@media (max-width: 768px) {
+    .letter-container {
+        margin: 0 1px !important; /* Harfler arası boşluğu azalt */
+    }
+}
