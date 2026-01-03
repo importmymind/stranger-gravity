@@ -255,10 +255,16 @@ canvas {
         padding: 8px !important;
     }
 
-    /* Canvas'ın mobilde ekranı tam doldurmasını sağla */
     canvas {
-        object-fit: fill !important; /* Veya 'cover' da deneyebilirsin */
+        /* Canvas'ın içini büyüttük (2x), şimdi onu ekrana geri sığdırıyoruz */
         width: 100vw !important;
         height: 100vh !important;
+        
+        /* Görüntü oranını bozmadan ekrana yay */
+        object-fit: fill !important; 
+        
+        /* Kaydırmayı engelle */
+        display: block;
+        touch-action: none; 
     }
 }

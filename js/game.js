@@ -1014,45 +1014,56 @@ function gameOver() {
 function resize() {
     if (!canvas) return;
 
-    // 1. Canvas'ın fiziksel boyutunu tarayıcı penceresine eşitle
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // 2. Mobil cihaz kontrolü (768px altı telefon/tablet kabul edilir)
     const isMobile = window.innerWidth < 768;
 
-    // 3. Oyun içi çizimleri (gradyanlar, arka planlar) yeni boyuta göre güncelle
+    // --- 1. KAMERA AYARI (ZOOM OUT) ---
+    // Mobildeysen ekranı sanal olarak 2 katı genişlikte çizdiriyoruz.
+    // Bu sayede ekrana daha fazla oyun alanı sığıyor (karakter küçülüyor).
+    // Eğer hala çok yakın gelirse 2.0 sayısını 2.5 yapabilirsin.
+    const zoomOutFactor = isMobile ? 2.0 : 1.0; 
+
+    // Canvas'ın iç çözünürlüğünü artırıyoruz
+    canvas.width = window.innerWidth * zoomOutFactor;
+    canvas.height = window.innerHeight * zoomOutFactor;
+
+    // Çizim ayarlarını sıfırla ki üst üste binip bozulmasın
+    if (ctx) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        
+        // İSTEĞE BAĞLI: Eğer 2.0 yapınca karakterler 'karınca gibi' küçük olursa
+        // aşağıdaki satırın başındaki // işaretini kaldırıp 1.2 veya 1.5 deneyebilirsin.
+        // ctx.scale(1.2, 1.2); 
+    }
+
+    // --- 2. GRADYANLARI GÜNCELLE ---
     if (typeof createGradients === "function") {
         createGradients();
     }
 
-    // 4. Giriş ekranı ve Mesaj Duvarı (HTML) için dinamik düzenlemeler
+    // --- 3. GİRİŞ EKRANI (DUVAR) AYARLARI ---
+    // Duvar HTML olduğu için onu Canvas'tan bağımsız ayarlıyoruz
     const wallContainer = document.querySelector('.wall-scale-container');
     if (wallContainer) {
-        // Tarayıcı adres çubuğu değişimlerinden etkilenmemesi için yüksekliği sabitle
         wallContainer.style.height = window.innerHeight + 'px';
         
-        // Ekran genişliğine göre ölçeklendirmeyi (zoom efekti) ayarla
         if (isMobile) {
-            // Mobilde içerik daralmasın diye ölçeği biraz artırıyoruz
+            // Duvarı ekrana sığdırmak için küçültüyoruz (Giriş ekranı zaten düzgün demiştin)
             wallContainer.style.transform = 'scale(0.60)'; 
         } else {
-            // Masaüstünde senin istediğin o ferah %75 görünümü
             wallContainer.style.transform = 'scale(0.75)'; 
         }
         
-        // Ölçekleme yaparken içeriğin kaymaması için merkezi sabitle
         wallContainer.style.transformOrigin = 'center center';
     }
 
-    // 5. Oyun menü ekranı (Character Selection) için mobil sığdırma
+    // --- 4. MENÜ EKRANI ---
     const menuScreen = document.getElementById('menu-screen');
     if (menuScreen && isMobile) {
         const menuContent = menuScreen.querySelector('.relative');
         if (menuContent) {
             menuContent.style.width = '95vw';
             menuContent.style.maxHeight = '90vh';
-            menuContent.style.overflowY = 'auto'; // Çok küçük ekranlarda kaydırma sağla
+            menuContent.style.overflowY = 'auto';
         }
     }
 }
