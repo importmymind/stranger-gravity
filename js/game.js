@@ -1036,7 +1036,7 @@ function resize() {
         // Ekran genişliğine göre ölçeklendirmeyi (zoom efekti) ayarla
         if (isMobile) {
             // Mobilde içerik daralmasın diye ölçeği biraz artırıyoruz
-            wallContainer.style.transform = 'scale(0.85)'; 
+            wallContainer.style.transform = 'scale(0.60)'; 
         } else {
             // Masaüstünde senin istediğin o ferah %75 görünümü
             wallContainer.style.transform = 'scale(0.75)'; 
