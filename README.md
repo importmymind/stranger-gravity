@@ -28,9 +28,10 @@ In this world, the floor is just a suggestion. Players must switch between top a
 
 ## 🕹️ Controls
 
-- **Spacebar / Left Click:** Flip Gravity
-- **Keyboard Shortcuts (Menu):**
-    - `M`: Mike | `W`: Will | `E`: Eleven | `D`: Dustin | `L`: Lucas | `X`: Max
+- **Flip Gravity:** Press the **Initial Letter** of your selected character during the run.
+    - `M` for Mike, `W` for Will, `E` for Eleven, `D` for Dustin, `L` for Lucas, `X` for Max.
+- **Menu Selection:** Use the same keys (`M, W, E, D, L, X`) to select your team members in the assembly menu.
+- **Mute Music:** Click the **Speaker Icon** on the top right to toggle sound.
 
 ## 🚀 Installation & Setup
 
