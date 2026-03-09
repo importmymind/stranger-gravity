@@ -1,5 +1,13 @@
 # Stranger Gravity 🚲
 
+<img width="661" height="446" alt="Ekran görüntüsü 2026-03-09 155218" src="https://github.com/user-attachments/assets/3b2811dc-e295-4b8e-9b1a-c07a43a3d11f" />
+
+<img width="1136" height="777" alt="Ekran görüntüsü 2026-01-03 155414" src="https://github.com/user-attachments/assets/ae73a487-81a6-4ff4-9785-b4c01d406ec6" />
+<img width="954" height="467" alt="Ekran görüntüsü 2026-03-09 155245" src="https://github.com/user-attachments/assets/239eccb0-fc10-44b0-a25d-9f583f634f22" />
+
+<img width="734" height="425" alt="Ekran görüntüsü 2026-03-09 155315" src="https://github.com/user-attachments/assets/42e24637-b735-41cc-93ac-726f289fa3ff" />
+
+
 Stranger Gravity is a high-octane, endless runner web game inspired by the **Stranger Things** universe. Built using vanilla JavaScript and HTML5 Canvas, the game challenges players to navigate through the Hawkins suburbs and the dark "Upside Down" dimension by manipulating gravity.
 
 ![Stranger Things Aesthetic](https://img.shields.io/badge/Theme-Stranger%20Things-red)
